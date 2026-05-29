@@ -1,0 +1,108 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Product Details</title>
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link rel="stylesheet" href="{% static 'single_product.css' %}">
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="top">
+
+<a href="{% url 'my_product' %}" class="back-btn">
+<i class="fa-solid fa-arrow-left"></i>
+Back
+</a>
+
+</div>
+
+<div class="details-box">
+
+<!-- IMAGE SIDE -->
+<div class="image-side">
+
+<img
+src="/media/{{product.product_image}}"
+class="main-image"
+id="mainImage">
+
+</div>
+
+<!-- CONTENT -->
+<div class="content">
+
+<div class="product-id">
+Product ID : #{{product.id}}
+</div>
+
+<h1 class="title">
+{{product.product_name}}        
+</h1>
+
+<div class="price">
+₹{{product.price}}
+</div>
+
+<p class="description">
+{{product.description}}
+</p>
+
+<div class="details">
+
+<div class="row">
+<span>Category</span>
+<strong>{{product.product_category}}</strong>
+</div>
+
+<div class="row">
+<span>Size</span>
+<strong>{{product.size}}</strong>
+</div>
+
+<div class="row">
+<span>Artist</span>
+<strong>{{product.Artist.first_name}} {{product.Artist.last_name}}</strong>
+</div>
+
+</div>
+
+<div class="actions">
+<!-- 
+<a href="#" class="btn buy">
+<i class="fa-solid fa-cart-shopping"></i>
+Buy Now
+</a> -->
+
+</div>
+
+<div class="status">
+Available
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+function changeImage(src){
+
+document.getElementById("mainImage").src=src;
+
+}
+
+</script>
+
+</body>
+</html>

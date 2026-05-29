@@ -1,0 +1,316 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ArtGallery Marketplace</title>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link rel="stylesheet" href="{% static 'home.css' %}">
+<link rel="stylesheet" href="{% static 'all_product.css' %}">
+</head>
+
+<body>
+
+<!-- ================= NAVBAR ================= -->
+
+<nav>
+
+<div class="logo">
+ArtGallery
+</div>
+
+
+<div class="search-box">
+    <form action="{% url 'all_product' %}" class="search-form">
+<input type="text" name="qry" placeholder="Search...">
+</form>
+</div>
+
+
+
+
+
+
+<div class="icons">
+{% if user.is_authenticated %}
+
+<a href="{% url 'user_logout' %}" class="icon-btn">
+<i class="fa-solid fa-right-from-bracket"></i>
+</a>
+
+<a href="{% url 'cart' %}" class="icon-btn">
+<i class="fas fa-cart-shopping"></i>
+</a>
+{% if user.is_staff %}
+<a href="{% url 'artist_dashboard' %}" class="icon-btn">
+<i class="fas fa-user"></i>
+</a>
+{% else %}
+<a href="{% url 'user_dashboard' %}" class="icon-btn">
+<i class="fas fa-user"></i>
+</a>
+{% endif %}
+
+{% else %}
+<div class="user-menu">
+
+<div class="icon-btn" onclick="toggleMenu()">
+<i class="fas fa-user"></i>
+</div>
+
+<div class="dropdown" id="dropdownMenu">
+<a href="{% url 'user_login' %}">Login</a>
+<a href="{% url 'reg' %}">Register</a>
+</div>
+
+</div>
+{% endif %}
+
+</div>
+</nav>
+
+<!-- ================= HERO SECTION ================= -->
+
+<section class="hero">
+
+<div class="hero-content">
+
+<h1>Buy & Sell Amazing Artworks</h1>
+
+<p>
+Discover talented artists, explore unique handmade artworks,
+digital paintings, sketches, portraits and custom creations.
+</p>
+
+<div class="hero-btns">
+
+<a href="{% url 'all_product' %}" class="btn-primary">Explore Art</a>
+{% if user.is_staff %}
+<a href="{% url 'add_product' %}" class="btn-secondary">Sell Your Art</a>
+{% endif %}
+</div>
+
+</div>
+
+</section>
+
+<!-- ================= CATEGORIES ================= -->
+
+<h1 class="section-title">Explore Categories</h1>
+
+<div class="divider"></div>
+
+<div class="gallery">
+{% for c in category %}
+<div class="card">
+  <div>
+<img src="/media/{{ c.cover_image }}" alt="{{ c.cat_name }}">
+  </div>
+
+<div>
+  <h3>{{ c.cat_name }}</h3>
+<p>{{ c.description }}</p>
+</div>
+<div>
+  <a href="{% url 'all_product' %}?cat={{c.id}}">
+<button href="">Explore</button>
+</a>
+</div>
+
+
+</div>
+{% endfor %}
+</div>
+
+<!-- ================= FEATURED PRODUCTS ================= -->
+
+<h1 class="section-title">Featured Artworks</h1>
+
+<div class="divider"></div>
+
+<div class="gallery">
+{% for f in feature_p %}
+<div class="card">
+<img src="/media/{{f.name.product_image}}">
+<h3>{{f.name.product_name}}</h3>
+<p class="price">₹{{f.name.price}}</p>
+<a href="{% url 'buy_now' %}?pid={{ f.id }}"><button>Buy Now</button></a>
+
+</div>
+{% endfor %}
+<!-- <div class="card">
+<img src="https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b">
+<h3>Modern Wall Painting</h3>
+<p class="price">₹3,200</p>
+<button>Buy Now</button>
+</div>
+
+<div class="card">
+<img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee">
+<h3>Digital Character Art</h3>
+<p class="price">₹999</p>
+<button>Buy Now</button>
+</div>
+
+<div class="card">
+<img src="https://images.unsplash.com/photo-1513364776144-60967b0f800f">
+<h3>Handmade Sketch</h3>
+<p class="price">₹799</p>
+<button>Buy Now</button>
+</div> -->
+
+</div>
+
+<!-- ================= HOW IT WORKS ================= -->
+
+<h1 class="section-title">How ArtGallery Works</h1>
+
+<div class="divider"></div>
+
+<div class="steps">
+
+<div class="card">
+
+<div class="num">1</div>
+
+<h3>Artists Upload Art</h3>
+
+<p>
+Artists create profiles and upload sketches,
+paintings and digital artworks for selling.
+</p>
+
+</div>
+
+<div class="card">
+
+<div class="num">2</div>
+
+<h3>Users Explore Products</h3>
+
+<p>
+Customers browse categories, search products
+and discover beautiful artworks online.
+</p>
+
+</div>
+
+<div class="card">
+
+<div class="num">3</div>
+
+<h3>Place Orders</h3>
+
+<p>
+Buy artwork instantly or request
+custom art directly from artists.
+</p>
+
+</div>
+
+<div class="card">
+
+<div class="num">4</div>
+
+<h3>Delivery & Payment</h3>
+
+<p>
+Artists deliver artwork digitally or physically
+and receive secure online payments.
+</p>
+
+</div>
+
+</div>
+
+<!-- ================= FOOTER ================= -->
+
+<footer>
+
+<div class="footer-grid">
+
+<div class="brand">
+
+<h2>ArtGallery</h2>
+
+<p>
+Buy and sell beautiful artworks online.
+Artists can showcase their creativity while
+customers discover unique handmade and digital art pieces.
+</p>
+
+<div class="social">
+
+<a href="#"><i class="fab fa-facebook-f"></i></a>
+
+<a href="#"><i class="fab fa-instagram"></i></a>
+
+<a href="#"><i class="fab fa-x-twitter"></i></a>
+
+<a href="#"><i class="fab fa-youtube"></i></a>
+
+</div>
+
+</div>
+
+<div class="col">
+
+<h3>Quick Links</h3>
+
+<a href="{% url 'home' %}">Home</a>
+<a href="{% url 'all_product' %}">Products</a>
+
+</div>
+
+<div class="col">
+
+<h3>Support</h3>
+
+<a href="#">Help Center</a>
+<a href="#">Contact Us</a>
+<a href="#">Privacy Policy</a>
+<a href="#">Terms & Conditions</a>
+
+</div>
+
+<div class="col">
+
+<h3>Contact Info</h3>
+
+<a href="#">📧 support@artgallery.com</a>
+<a href="#">📞 +91 98765 43210</a>
+<a href="#">📍 India</a>
+<a href="#">🕒 Mon - Sat: 9AM to 7PM</a>
+
+</div>
+
+</div>
+
+<div class="bottom">
+© 2026 ArtGallery. All Rights Reserved.
+</div>
+
+</footer>
+
+<!-- ================= SCRIPT ================= -->
+
+<script>
+
+function toggleMenu(){
+  document.getElementById("dropdownMenu").classList.toggle("show");
+}
+
+window.onclick = function(e){
+
+  if(!e.target.closest('.user-menu')){
+    document.getElementById("dropdownMenu").classList.remove("show");
+  }
+
+}
+
+</script>
+
+</body>
+</html>

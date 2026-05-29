@@ -1,0 +1,142 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Edit Product</title>
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link rel="stylesheet" href="{% static 'edit_product.css' %}">
+
+</head>
+
+<body>
+
+<div class="dashboard">
+
+<!-- MAIN -->
+<div class="main">
+
+<div class="top">
+
+<a href="{% url 'my_product' %}" class="back-btn">
+<i class="fa-solid fa-arrow-left"></i>
+Back
+</a>
+
+</div>
+
+<!-- FORM -->
+<div class="form-box">
+
+<form method="post" enctype="multipart/form-data">
+{% csrf_token %}
+<div class="form-grid">
+
+<!-- PRODUCT NAME -->
+<div class="field">
+<label>Artwork Name</label>
+<div class="input-box">
+<i class="fa-solid fa-box"></i>
+<input type="text" value="{{product.product_name}}" name="pname">
+</div>
+</div>
+
+<!-- PRICE -->
+<div class="field">
+<label>Price</label>
+<div class="input-box">
+<i class="fa-solid fa-indian-rupee-sign"></i>
+<input type="text" value="{{product.price}}" placeholder="Enter price" name="pp">
+</div>
+</div>
+
+</div>
+<!-- CATEGORY -->
+<div class="field">
+<label>Style</label>
+<div class="input-box">
+<i class="fa-solid fa-layer-group"></i>
+<select name="pcat">
+    {% for i in cats %}
+    {% if i.id == product.product_category.id %}
+    <option value="{{i.id}}" selected>{{i.cat_name}}</option>
+    {% else %}
+    <option value="{{i.id}}">{{i.cat_name}}</option>
+    {% endif %}
+    {% endfor %}
+</select>
+</div>
+</div>
+
+<!-- SIZE -->
+<div class="field">
+<label>Artwork Size</label>
+<div class="input-box">
+<i class="fa-solid fa-ruler-combined"></i>
+<input type="text" value="{{product.size}}" placeholder="Enter size" name="psize">
+</div>
+</div>
+
+
+<!-- DESCRIPTION -->
+<div class="field full">
+<label>Description</label>
+<div class="input-box">
+<textarea placeholder="Enter product description" name="dp" value="{{product.description}}">{{product.description}}
+</textarea>
+
+</div>
+</div>
+
+<!-- IMAGE -->
+<div class="field full">
+<label>Upload Artwork Image</label>
+<div class="input-box">
+<i class="fa-solid fa-image"></i>
+<input type="file"  name="pimg">
+</div>
+<img
+src="/media/{{product.product_image}}"
+class="preview"
+id="preview">
+
+</div>
+
+</div>
+
+<!-- BUTTONS -->
+<div class="actions">
+
+<button type="submit" class="btn save">
+<i class="fa-solid fa-floppy-disk"></i>
+Save Changes
+</button>
+
+<!-- <button class="btn cancel" type="reset">
+<i class="fa-solid fa-rotate-left"></i>
+Reset
+</button> -->
+
+
+</div>
+
+</form>
+
+</div>
+
+</div>
+</div>
+
+{% if status %}
+<script>
+    alert("{{status}}");
+    window.location.href = "{% url 'edit_product' %}?pid={{id}}";
+</script>
+{% endif %}
+
+</body>
+</html>

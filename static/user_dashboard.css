@@ -1,0 +1,179 @@
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
+body{
+background:#f5f5fb;
+}
+
+.dashboard{
+display:flex;
+min-height:100vh;
+}
+
+/* Sidebar */
+.sidebar{
+width:260px;
+background:linear-gradient(180deg,#6c3cf0,#4f22d6);
+padding:25px 20px;
+color:#fff;
+}
+
+.logo{
+font-size:28px;
+font-weight:700;
+margin-bottom:30px;
+}
+
+.menu a{
+display:flex;
+align-items:center;
+gap:12px;
+padding:14px 16px;
+color:#fff;
+text-decoration:none;
+border-radius:12px;
+margin-bottom:12px;
+transition:.3s;
+}
+
+.menu a:hover,.active{
+background:rgba(255,255,255,.15);
+}
+
+.logout{
+background:#fff;
+color:#6c3cf0 !important;
+font-weight:700;
+margin-top:20px;
+}
+
+/* Main */
+.main{
+flex:1;
+padding:35px;
+}
+
+.home-btn{
+display:inline-flex;
+align-items:center;
+gap:8px;
+text-decoration:none;
+color:#6c3cf0;
+font-weight:700;
+margin-bottom:25px;
+font-size:18px;
+}
+
+.title{
+font-size:32px;
+font-weight:700;
+margin-bottom:25px;
+color:#222;
+}
+
+/* Profile Box */
+.profile-box{
+background:#fff;
+padding:25px;
+border-radius:22px;
+box-shadow:0 8px 22px rgba(0,0,0,.08);
+display:grid;
+grid-template-columns:220px 1fr;
+gap:25px;
+margin-bottom:30px;
+}
+
+.profile-box img{
+width:100%;
+height:220px;
+border-radius:20px;
+object-fit:cover;
+}
+
+.info h2{
+font-size:30px;
+margin-bottom:12px;
+color:#222;
+}
+
+.info p{
+font-size:17px;
+color:#555;
+line-height:1.9;
+}
+
+.btn{
+display:inline-block;
+margin-top:15px;
+padding:12px 18px;
+background:#6c3cf0;
+color:#fff;
+text-decoration:none;
+border-radius:12px;
+font-weight:700;
+}
+
+/* Orders */
+.section-title{
+font-size:28px;
+margin-bottom:18px;
+color:#222;
+}
+
+.order-box{
+background:#fff;
+padding:18px 20px;
+border-radius:18px;
+box-shadow:0 8px 20px rgba(0,0,0,.08);
+margin-bottom:15px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+flex-wrap:wrap;
+gap:10px;
+}
+
+.order-info p{
+color:#555;
+line-height:1.8;
+}
+
+.status{
+padding:8px 14px;
+border-radius:30px;
+font-size:14px;
+font-weight:700;
+}
+
+.pending{
+background:#fff4d6;
+color:#c98900;
+}
+
+.completed{
+background:#e8ffe8;
+color:#1b8f1b;
+}
+
+@media(max-width:900px){
+.dashboard{
+flex-direction:column;
+}
+
+.sidebar{
+width:100%;
+}
+
+.profile-box{
+grid-template-columns:1fr;
+}
+
+.main{
+padding:20px;
+}
+}

@@ -1,0 +1,218 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ArtGallery Register</title>
+<script src="{% static 'jquery.js' %}"></script>
+<script src="{% static 'bootstrap.js' %}"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<script src="{% static 'jquery.js' %}"></script>
+<link rel="stylesheet" href="{% static 'register.css' %}">
+</head>
+
+<body>
+
+<div class="wrap">
+
+<!-- ================= LEFT SIDE ================= -->
+
+<div class="left">
+
+<h1>Join ArtGallery</h1>
+
+<p>
+Create your account to buy beautiful artworks
+or start selling your creative art online.
+</p>
+
+<div class="features">
+
+<div>
+<i class="fa-solid fa-palette"></i>
+<span>Sell sketches, paintings & digital art</span>
+</div>
+
+<div>
+<i class="fa-solid fa-cart-shopping"></i>
+<span>Buy unique artworks from artists</span>
+</div>
+
+<div>
+<i class="fa-solid fa-shield"></i>
+<span>Safe & secure platform</span>
+</div>
+
+</div>
+
+</div>
+
+<!-- ================= RIGHT SIDE ================= -->
+
+<div class="right">
+
+<a href="{% url 'home' %}" class="home">
+<i class="fa-solid fa-house"></i> Home
+</a>
+
+<h2 class="title">Create Account</h2>
+
+<form method="post">
+{% csrf_token %}
+<div class="form-grid">
+
+<!-- FIRST NAME -->
+
+<div class="form-group field">
+<label>First Name</label>
+
+<div class="input-box">
+<i class="fa-solid fa-user"></i>
+<input type="text" placeholder="Enter first name" name="first" required>
+</div>
+</div>
+
+<!-- LAST NAME -->
+
+<div class="form-group field">
+<label>Last Name</label>
+
+<div class="input-box">
+<i class="fa-solid fa-user"></i>
+<input type="text" placeholder="Enter last name" name="last">
+</div>
+</div>
+
+<!-- USERNAME -->
+    
+
+<div class="form-group field">
+<label>Username</label>
+
+<div class="input-box">
+<i class="fa-solid fa-at"></i>
+<input type="text" placeholder="Enter username" name="uname" id="username" onkeyup="checkuser()" required>
+</div>
+<small id="result"></small>
+</div>
+
+<!-- EMAIL -->
+
+<div class="form-group field">
+<label>Email</label>
+
+<div class="input-box">
+<i class="fa-solid fa-envelope"></i>
+<input type="email" placeholder="Enter email" name="email" required>
+</div>
+</div>
+
+<!-- CONTACT -->
+
+<div class="form-group field">
+<label>Contact Number</label>
+
+<div class="input-box">
+<i class="fa-solid fa-phone"></i>
+<input type="text" placeholder="Enter contact number" name="contact" required pattern="[0-9]{10}" title="Number must contain 10 digits only!!">
+</div>
+</div>
+
+<!-- USER TYPE -->
+
+<div class="form-group field">
+<label>User Type</label>
+
+<div class="input-box">
+<i class="fa-solid fa-user-tag"></i>
+
+<select name="utype">
+<option value="customer">Customer</option>
+<option value="artist">Artist</option>
+</select>
+
+</div>
+</div>
+
+<!-- PASSWORD -->
+
+<div class="form-group field">
+<label>Password</label>
+
+<div class="input-box" id="pass">
+<i class="fa-solid fa-lock"></i>
+<input type="password" placeholder="Enter password" name="password" required id="pas" onkeyup="check_pass()">
+</div>
+</div>
+
+<!-- CONFIRM PASSWORD -->
+
+<div class="form-group field">
+<label>Confirm Password</label>
+
+<div class="input-box" id="cpass">
+<i class="fa-solid fa-shield-halved"></i>
+<input type="password" placeholder="Confirm password" required id="cpas" onkeyup="check_pass()">
+</div>
+</div>
+
+</div>
+
+<button type="submit" class="btn" id="submitbtn">Create Account</button>
+
+<div class="bottom">
+Already have an account?
+<a href="{% url 'user_login' %}">Login</a>
+</div>
+
+</form>
+
+</div>
+
+</div>
+<script>
+    function checkuser(){
+        let un = document.getElementById("username").value;
+        $.ajax({
+            url:"{% url 'check_user' %}",
+            type:"get",
+            data:{usern:un},
+            success:function(data){
+                if(data == "exist"){
+                    $("#result").html("This username is already taken.").addClass("text-danger");
+                    $("#username").addClass("bg-danger");
+                    $("#submitbtn").attr("disabled", "disabled");
+                }else{
+                    $("#result").html("").addClass("text-success");
+                    $("#username").addClass("alert alert-success");
+                    $("#submitbtn").removeAttr("disabled");
+                }   
+            }
+        })
+    }
+
+function check_pass(){
+    let p = $("#pas").val();
+    let cp = $("#cpas").val();
+    
+    if(p==cp){
+        $("#pass").css("border","1px solid green");
+        $("#cpass").css("border","1px solid green");
+        $("#submitbtn").removeAttr("disabled");
+    }else{
+        $("#pass").css("border","1px solid red");
+        $("#cpass").css("border","1px solid red");
+        $("#submitbtn").attr("disabled","disabled");
+    }
+}
+
+</script>
+{% if status %}
+    <script>
+        alert("{{ status }}");
+        window.location .href = "{% url 'user_login' %}";
+    </script>
+{% endif %}
+</body>
+</html>

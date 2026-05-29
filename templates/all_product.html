@@ -1,0 +1,213 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Artworks</title>
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link rel="stylesheet" href="{% static 'home.css' %}">
+<link rel="stylesheet" href="{% static 'all_product.css' %}">
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<nav>
+
+<div class="logo">
+ArtGallery
+</div>
+
+
+<div class="search-box">
+    <form action="{% url 'all_product' %}" class="search-form">
+<input type="text" name="qry" placeholder="Search...">
+</form>
+</div>
+
+
+
+<div class="icons">
+{% if user.is_authenticated %}
+
+<a href="{% url 'user_logout' %}" class="icon-btn">
+<i class="fa-solid fa-right-from-bracket"></i>
+</a>
+
+<a href="{% url 'cart' %}" class="icon-btn">
+<i class="fas fa-cart-shopping"></i>
+</a>
+{% if user.is_staff %}
+<a href="{% url 'artist_dashboard' %}" class="icon-btn">
+<i class="fas fa-user"></i>
+</a>
+{% else %}
+<a href="{% url 'user_dashboard' %}" class="icon-btn">
+<i class="fas fa-user"></i>
+</a>
+{% endif %}
+
+{% else %}
+<div class="user-menu">
+
+<div class="icon-btn" onclick="toggleMenu()">
+<i class="fas fa-user"></i>
+</div>
+
+<div class="dropdown" id="dropdownMenu">
+<a href="{% url 'user_login' %}">Login</a>
+<a href="{% url 'reg' %}">Register</a>
+</div>
+
+</div>
+{% endif %}
+
+</div>
+</nav>
+
+<!-- PAGE -->
+<div class="container">
+
+<div class="top">
+
+<h1 class="title">
+Artworks
+</h1>
+
+<!-- <button class="filter-btn">
+<i class="fa-solid fa-filter"></i>
+Filter
+</button> -->
+
+</div>
+
+<!-- PRODUCT GRID -->
+<div class="grid">
+<div class="gallery">
+<!-- CARD 1 -->
+{% for p in products %}
+<div class="card">
+<img src="/media/{{ p.product_image }}" alt="{{ p.product_name }}">
+
+<div class="info">
+
+<div class="name">
+{{ p.product_name }}
+</div>
+
+<div class="artist">
+by {{ p.Artist.first_name }} {{ p.Artist.last_name }}
+</div>
+
+<div class="price">
+₹{{ p.price }}  
+</div>
+
+<div class="details">
+<span></span>
+<span>{{ p.size }}</span>
+</div>
+
+<div class="actions">
+
+<a href="{% url 'buy_now' %}?pid={{ p.id }}" class="btn view">
+<i class="fa-solid fa-eye"></i>
+View
+</a>
+
+</div>
+
+</div>
+</div>
+{% endfor %}
+</div>
+</div>
+
+</div>
+<footer>
+
+<div class="footer-grid">
+
+<div class="brand">
+
+<h2>ArtGallery</h2>
+
+<p>
+Buy and sell beautiful artworks online.
+Artists can showcase their creativity while
+customers discover unique handmade and digital art pieces.
+</p>
+
+<div class="social">
+
+<a href="#"><i class="fab fa-facebook-f"></i></a>
+
+<a href="#"><i class="fab fa-instagram"></i></a>
+
+<a href="#"><i class="fab fa-x-twitter"></i></a>
+
+<a href="#"><i class="fab fa-youtube"></i></a>
+
+</div>
+
+</div>
+
+<div class="col">
+
+<h3>Quick Links</h3>
+
+<a href="{% url 'home' %}">Home</a>
+<a href="{% url 'all_product' %}">Products</a>
+
+</div>
+
+<div class="col">
+
+<h3>Support</h3>
+
+<a href="#">Help Center</a>
+<a href="#">Contact Us</a>
+<a href="#">Privacy Policy</a>
+<a href="#">Terms & Conditions</a>
+
+</div>
+
+<div class="col">
+
+<h3>Contact Info</h3>
+
+<a href="#">📧 support@artGallery.com</a>
+<a href="#">📞 +91 98765 43210</a>
+<a href="#">📍 India</a>
+<a href="#">🕒 Mon - Sat: 9AM to 7PM</a>
+
+</div>
+
+</div>
+
+<div class="bottom">
+© 2026 ArtGallery. All Rights Reserved.
+</div>
+
+</footer>
+<script>
+
+function toggleMenu(){
+  document.getElementById("dropdownMenu").classList.toggle("show");
+}
+
+window.onclick = function(e){
+
+  if(!e.target.closest('.user-menu')){
+    document.getElementById("dropdownMenu").classList.remove("show");
+  }
+
+}
+
+</script>
+</body>
+</html>

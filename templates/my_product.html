@@ -1,0 +1,109 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Product Management</title>
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link rel="stylesheet" href="{% static 'bootstrap.css' %}">
+<link rel="stylesheet" href="{% static 'my_product.css' %}">
+<link rel="stylesheet" href="{% static 'view.css' %}">
+<link rel="stylesheet" href="{% static 'h1.css' %}">
+</head>
+
+<body>
+
+<div class="dashboard">
+
+<!-- SIDEBAR -->
+<div class="sidebar">
+
+<div class="logo">
+ArtGallery
+</div>
+
+<div class="menu">
+<a href="{% url 'artist_dashboard' %}"><i class="fa-solid fa-user"></i> Artist Profile</a>
+<a href="{% url 'A_change_password' %}"><i class="fa-solid fa-key"></i> Change Password</a>
+<a href="{% url 'add_product' %}"><i class="fa-solid fa-add"></i> Add Artwork</a>
+<a href="{% url 'my_product' %}" class="active"><i class="fa-solid fa-box"></i> My Artwork</a>
+<a href="{% url 'user_logout' %}" class="logout"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
+</div>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+
+<div class="top">
+
+<h1 class="title">
+Manage Your Artworks
+</h1>
+
+<a href="{% url 'add_product' %}" class="add-btn">
+<i class="fa-solid fa-plus"></i>
+Add Artwork
+</a>
+
+</div>
+<div class="gallery">
+{% for p in products %}
+<div class="grid">  
+
+<!-- CARD 1 -->
+<div class="card">
+
+<img src="/media/{{p.product_image}}">
+
+<div class="info">
+
+<div class="product-id">
+Product ID : {{p.id}}
+</div>
+
+<div class="name">
+{{p.product_name}}
+</div>
+
+<div class="name">
+{{p.product_category}}
+</div>
+
+<div class="price">
+₹{{p.price}}
+</div>
+
+<div class="actions">
+
+
+<a href="{% url 'single_product' %}?pid={{p.id}}" class="view">
+<i class="fa-solid fa-eye"></i>
+View
+</a>
+
+<a href="{% url 'edit_product' %}?pid={{p.id}}" class="edit">
+<i class="fa-solid fa-pen"></i>
+Edit
+</a>
+
+<a href="{% url 'delete_product' %}?pid={{p.id}}" class="delete">
+<i class="fa-solid fa-trash"></i>
+Delete
+</a>
+
+</div>
+</div>
+</div>
+<!-- VIEW PRODUCT MODAL -->
+
+{% endfor %}
+</div>
+</div>
+</div>
+
+
+</body>
+</html>

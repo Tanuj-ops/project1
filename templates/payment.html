@@ -1,0 +1,66 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>ArtGallry Payment</title>
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link rel="stylesheet" href="{% static 'payment.css' %}">
+<style>
+    .back-btn{
+        padding:12px 18px;
+        background:#6c3cf0;
+        color:#fff;
+        text-decoration:none;
+        border-radius:12px;
+        font-weight:700;
+        margin-bottom:20px;
+    }
+</style>
+
+</head>
+
+<body>
+<div class="container" style="display: flex; justify-content: center; align-items: center; min-height: 100vh; width: 100%;">
+
+
+
+<!-- RIGHT -->
+<div class="card" style="width: 90%; max-width: 800px;">
+<div style="display: flex; flex-direction: column; gap: 20px;">
+    <a href="{% url 'cart' %}">
+        <button class="back-btn">
+            <i class="fa-solid fa-arrow-left"></i>
+            Back
+        </button>
+    </a>
+
+    <div>
+        <span class="top-tag">
+            Secure Payment
+        </span>
+    </div>
+</div>
+
+<h2 class="pay-title">
+Choose Secure Payment
+</h2>
+<div class="parent" style="display: flex; justify-content: center; align-items: center;">
+    {{form.render}}
+</div>
+
+
+
+</div>
+
+</div>
+
+
+</body>
+</html>

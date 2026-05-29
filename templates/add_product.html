@@ -1,0 +1,60 @@
+{% load static %}
+{% load bootstrap4 %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portfolio Page</title>
+<link rel="stylesheet" href="{% static 'bootstrap/bootstrap.min.css' %}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<!-- <link rel="stylesheet" href="{% static 'add_product.css' %}"> -->
+<link rel="stylesheet" href="{% static 'bootstrap.css' %}">
+<link rel="stylesheet" href="{% static 'artist_dashboard.css' %}">
+
+<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" >
+    
+</head>
+
+<body>
+
+<div class="dashboard">
+
+<!-- Sidebar -->
+<div class="sidebar">
+<div class="logo">ArtGallery</div>
+
+<div class="menu">
+<a href="{% url 'artist_dashboard' %}"><i class="fa-solid fa-user"></i> Artist Profile</a>
+<a href="{% url 'A_change_password' %}"><i class="fa-solid fa-key"></i> Change Password</a>
+<a href="{% url 'add_product' %}" class="active"><i class="fa-solid fa-add"></i> Add Artwork</a>
+<a href="{% url 'my_product' %}"><i class="fa-solid fa-box"></i> My Artwork</a>
+<a href="{% url 'user_logout' %}" class="logout"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
+</div>
+</div>
+
+<!-- Main -->
+<div class="main">
+<div class="row">
+    <div class="col-md-6 mx-auto bg-light p-4 rounded">
+
+<h1 class="title">Add Artwork</h1>
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {% bootstrap_form form %}
+    <button class="btn">Add Product</button>
+</form>
+</div>
+</div>
+</div>
+</div>
+
+{% if status %}
+<script>
+    alert("{{ status }}");
+    window.location.href = "{% url 'add_product' %}";
+</script>
+{% endif %}
+
+</body>
+</html>

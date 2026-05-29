@@ -1,0 +1,222 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ArtGallery Cart</title>
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link rel="stylesheet" href="{% static 'cart.css' %}">
+<link rel="stylesheet" href="{% static 'home.css' %}">
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<nav>
+
+<div class="logo">
+ArtGallery
+</div>
+
+<div class="icons">
+{% if user.is_authenticated %}
+
+{% if user.is_staff %}
+<a href="{% url 'artist_dashboard' %}" class="icon-btn">
+<i class="fas fa-user"></i>
+</a>
+{% else %}
+<a href="{% url 'user_dashboard' %}" class="icon-btn">
+<i class="fas fa-user"></i>
+</a>
+{% endif %}
+
+{% else %}
+<div class="user-menu">
+
+<div class="icon-btn" onclick="toggleMenu()">
+<i class="fas fa-user"></i>
+</div>
+
+<div class="dropdown" id="dropdownMenu">
+<a href="{% url 'user_login' %}">Login</a>
+<a href="{% url 'reg' %}">Register</a>
+</div>
+
+</div>
+{% endif %}
+
+</div>
+
+</nav>
+{% if status %}
+<h1>{{status}}</h1>
+{% else %}
+<!-- MAIN -->
+<div class="container">
+
+<!-- CART -->
+<div class="cart-box">
+{% if msz %}
+<div class="container">
+<div class="container" style="margin: 0 auto; text-align:center;">{{msz}}</div>
+</div>
+{% endif %}
+<h1 class="title">
+Shopping Cart
+</h1>
+
+
+<!-- ITEM -->
+{% for i in items %}
+<div class="cart-item" id="row{{i.id}}">
+
+<div class="product">
+
+<img src="/media/{{i.product.product_image}}">
+
+<div class="details">
+
+<h3>{{i.product.product_name}}</h3>
+
+<p>
+{{i.product.description}}
+</p>
+
+<div class="price">
+₹{{i.product.price}}
+</div>
+
+</div>
+
+</div>
+
+<div class="qty">
+
+<button class="fa fa-plus" onclick="change_quan('{{i.id}}','plus')"></button>
+<input type="number" value="{{i.quantity}}" id="cart{{i.id}}" class="qty-input">
+<!-- <input class="qty-input" id="cart{{i.id}}" value="{{i.quantity}}"> -->
+
+</input>
+
+<button class="fa fa-minus" onclick="change_quan('{{i.id}}','minus')"></button>
+
+</div>
+
+<button onclick="remove_cart('{{i.id}}')" class="remove">
+<i class="fa-solid fa-trash"></i>
+ Remove
+</button>
+
+</div>
+
+
+{% endfor %}
+</div>
+
+<!-- SUMMARY -->
+<div class="summary">
+
+<h2>Order Summary</h2>
+
+<div class="row">
+<span>Subtotal</span>
+<span id="item_total"></span>
+</div>
+
+<div class="row">
+<span>Quantity</span>
+<span id="quantity"></span>
+</div>
+
+<div class="row">
+<span>Delivery</span>
+<span>Free</span>
+</div>
+
+<div class="row total">
+<span>Total</span>
+<span id="grand_total"> </span>
+</div>
+
+<a href="{% url 'precess_payment' %}">
+<button class="checkout-btn">
+Proceed to Checkout
+</button>
+</a>
+
+
+</div>
+
+</div>
+{% endif %}
+<script>
+
+function toggleMenu(){
+  document.getElementById("dropdownMenu").classList.toggle("show");
+}
+
+window.onclick = function(e){
+
+  if(!e.target.closest('.user-menu')){
+    document.getElementById("dropdownMenu").classList.remove("show");
+  }
+
+}
+
+function grandTotal(){
+    $.ajax({
+        url:"{% url 'get_cart_data' %}",
+        type:"get",
+        success:function(data){
+            $("#item_total").html("&#8377;"+data.total*data.quan)
+            $("#grand_total").html("&#8377;"+data.total*data.quan)
+            $("#quantity").html(data.quan+" Items")
+        }
+    })
+}
+grandTotal();
+
+function change_quan(id,action){
+    let old = $("#cart"+id).val();
+    
+    quan = 0
+    if(action=="minus"){
+        quan += parseInt(old)-1
+    }else{
+        quan += parseInt(old)+1
+    }
+    
+    $("#cart"+id).val(quan);
+
+     $.ajax({
+        url:"{% url 'change_quan' %}",
+        type:"get",
+        data:{cid:id, quantity:quan},
+        success:function(data){
+            grandTotal();
+        if(data==0){
+            remove_cart(id);
+                 }
+               }
+           })
+}
+
+function remove_cart(id){
+    $.ajax({
+        url:"{% url 'change_quan' %}",
+        data:{delete_cart:id},
+        success:function(data){
+            grandTotal();
+            $("#row"+id).hide();
+        }
+    })
+}
+</script>
+
+</body>
+</html>

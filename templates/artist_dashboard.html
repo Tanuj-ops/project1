@@ -1,0 +1,68 @@
+{%load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Artist Profile</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<!-- <link rel="stylesheet" href="{% static 'add_product.css' %}"> -->
+<link rel="stylesheet" href="{% static 'bootstrap.css' %}">
+<link rel="stylesheet" href="{% static 'artist_dashboard.css' %}">
+
+</head>
+
+<body>
+
+<div class="dashboard">
+
+<!-- Sidebar -->
+<div class="sidebar">
+<div class="logo">ArtGallery</div>
+
+<div class="menu">
+<a href="{% url 'artist_dashboard' %}" class="active"><i class="fa-solid fa-user"></i> Artist Profile</a>
+<a href="{% url 'A_change_password' %}"><i class="fa-solid fa-key"></i> Change Password</a>
+<a href="{% url 'add_product' %}"><i class="fa-solid fa-add"></i> Add Artwork</a>
+<a href="{% url 'my_product' %}"><i class="fa-solid fa-box"></i> My Artwork</a>
+<a href="{% url 'user_logout' %}" class="logout"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
+</div>
+</div>
+
+<!-- Main Content -->
+<div class="main">
+<a href="{% url 'home' %}" class="home-btn">
+<i class="fa-solid fa-home"></i> Home
+</a>  
+
+<h1 class="title">My Profile</h1>
+
+<div class="profile-box">
+    
+{% if user.register_table.profile_image %}
+<img src="/media/{{ user.register_table.profile_image }}">
+{% else %}
+<img src="{% static '/image/default_image.png' %}" alt="Default Profile Image">
+{% endif %}
+
+<div class="info">
+<h2><strong>{{ user.first_name }} {{ user.last_name }}</strong></h2>
+<p><strong>Username :</strong> {{ user.username }}</p>
+<p><strong>Email :</strong> {{ user.email }}</p>
+<p><strong>Phone :</strong> {{ user.register_table.contact_number }}</p>
+<p><strong>Experience :</strong> {{ user.register_table.experience }}</p>
+<p><strong>UPI Number :</strong> {{ user.register_table.upi_number }}</p>
+<p><strong>Address :</strong> {{ user.register_table.address }}</p>
+
+<a href="{% url 'edit_artist_profile' %}" class="btn">Edit Profile</a>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</body>
+</html>

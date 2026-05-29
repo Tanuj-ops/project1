@@ -1,0 +1,64 @@
+{%load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>User Profile</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link rel="stylesheet" href="{% static 'user_dashboard.css' %}">
+</head>
+
+<body>
+
+<div class="dashboard">
+
+<!-- Sidebar -->
+<div class="sidebar">
+<div class="logo">ArtGallery</div>
+
+<div class="menu">
+<a href="{% url 'user_dashboard' %}" class="active"><i class="fa-solid fa-user"></i> My Profile</a>
+<a href="{% url 'U_change_password' %}"><i class="fa-solid fa-key"></i> Change Password</a>
+
+<a href="{% url 'user_logout' %}" class="logout"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
+</div>
+</div>
+
+<!-- Main -->
+<div class="main">
+
+<a href="{% url 'home' %}" class="home-btn">
+<i class="fa-solid fa-home"></i> Home
+</a>    
+
+<h1 class="title">User Profile</h1>
+
+<div class="profile-box">
+    
+{% if user.register_table.profile_image %}
+<img src="/media/{{ user.register_table.profile_image }}">
+{% else %}
+<img src="{% static '/image/default_image.png' %}" alt="Default Profile Image">
+{% endif %}
+
+<div class="info">
+<h2>{{ user.first_name }} {{ user.last_name }}</h2>
+<p><strong>Username :</strong> {{ user.username }}</p>
+<p><strong>Email :</strong> {{ user.email }}</p>
+<p><strong>Phone :</strong> {{ user.register_table.contact_number }}</p>
+<p><strong>UPI Number :</strong> {{ user.register_table.upi_number }}</p>
+<p><strong>Address :</strong> {{ user.register_table.address }}</p>
+<p><strong>Bio :</strong> {{ user.register_table.bio }}</p>
+<!-- <p><strong>Location:</strong> {{ user.location }}</p> -->
+
+<a href="{% url 'edit_user_profile' %}" class="btn">Edit Profile</a>   
+</div>
+
+</div>
+
+</div>
+</div>
+
+</body>
+</html>

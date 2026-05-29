@@ -1,0 +1,82 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Delete Product</title>
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link rel="stylesheet" href="{% static 'delete_product.css' %}">
+</head>
+
+<body>
+
+<div class="delete-box">
+
+<!-- ICON -->
+<div class="icon">
+<i class="fa-solid fa-trash"></i>
+</div>
+
+<!-- TITLE -->
+<h1 class="title">
+Delete Artwork?
+</h1>
+
+<!-- TEXT -->
+<p class="text">
+Are you sure you want to delete this artwork?
+This action cannot be undone.
+</p>
+
+<!-- PRODUCT -->
+<div class="product">
+
+<img
+src="/media/{{product.product_image}}">
+
+<div class="product-info">
+
+<h3>
+{{product.product_name}}
+</h3>
+
+<p>
+Category : {{product.product_category}}
+<br>
+Price : ₹{{product.price}}
+</p>
+
+</div>
+
+</div>
+
+<!-- BUTTONS -->
+<div class="actions">
+
+<a href="{% url 'my_product' %}" class="btn cancel">
+<i class="fa-solid fa-arrow-left"></i>
+Cancel
+</a>
+
+<a href="{% url 'delete_product' %}?pid={{product.id}}&&action=confirm" class="btn delete">
+<i class="fa-solid fa-trash"></i>
+Delete Artwork
+</a>
+
+</div>
+
+</div>
+
+{% if status %}
+<script>
+    alert("{{status}}");
+    window.location.href = "{% url 'my_product' %}?pid={{id}}";
+</script>
+{% endif %}
+
+</body>
+</html>

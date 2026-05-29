@@ -1,0 +1,165 @@
+
+    * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #f5f3ff, #e8e1ff);
+}
+
+
+.wrap {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  max-width: 980px;
+  width: 92%;
+  background: #fff;
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.12);
+}
+
+
+.left {
+  padding: 50px;
+  background: linear-gradient(135deg, #6c3cf0, #8e67ff);
+  color: #fff;
+}
+
+.left h1 {
+  font-size: 42px;
+  margin-bottom: 15px;
+}
+
+.left p {
+  line-height: 1.7;
+  opacity: 0.95;
+}
+
+.badge {
+  margin-top: 30px;
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.badge span {
+  background: rgba(255, 255, 255, 0.18);
+  padding: 10px 14px;
+  border-radius: 30px;
+}
+
+
+.right {
+  padding: 50px;
+}
+
+.home {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  color: #6c3cf0;
+  font-weight: 700;
+  margin-bottom: 18px;
+}
+
+.title {
+  font-size: 32px;
+  font-weight: 700;
+  color: #222;
+  margin-bottom: 8px;
+}
+
+.sub {
+  color: #777;
+  margin-bottom: 28px;
+}
+
+
+.field {
+  margin-bottom: 18px;
+}
+
+.field label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+.input {
+  display: flex;
+  align-items: center;
+  border: 1px solid #ddd;
+  border-radius: 14px;
+  padding: 12px 14px;
+}
+
+.input i {
+  color: #888;
+  margin-right: 10px;
+}
+
+.input input {
+  border: none;
+  outline: none;
+  width: 100%;
+  font-size: 15px;
+}
+
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 8px 0 22px;
+}
+
+.row a,
+.bottom a {
+  text-decoration: none;
+  color: #6c3cf0;
+  font-weight: 700;
+}
+
+
+.btn {
+  width: 100%;
+  border: none;
+  padding: 14px;
+  border-radius: 14px;
+  background: #6c3cf0;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+
+.bottom {
+  text-align: center;
+  margin-top: 20px;
+  color: #666;
+}
+
+
+@media (max-width: 800px) {
+  .wrap {
+    grid-template-columns: 1fr;
+  }
+
+  .left {
+    display: none;
+  }
+
+  .right {
+    padding: 35px 22px;
+  }
+}
